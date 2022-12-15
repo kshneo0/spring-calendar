@@ -5,6 +5,7 @@ import com.calendar.core.SimpleEntityRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import java.util.List;
  * author :  KimSangHoon
  * date : 2022/12/14
  */
+@EnableJpaAuditing
 @EntityScan("com.calendar.core")
 @EnableJpaRepositories("com.calendar.core")
 @RestController

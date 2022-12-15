@@ -20,10 +20,7 @@ import java.time.LocalDateTime;
 @Getter
 @Table(name = "schedules")
 @Entity
-public class Schedule {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Schedule  extends BaseEntity{
 
     private LocalDateTime startAt;
     private LocalDateTime endAt;
@@ -36,10 +33,6 @@ public class Schedule {
 
     @Enumerated(EnumType.STRING)
     private ScheduleType scheduleType;
-
-    //    private List<Engagement> engagements;
-    @Builder.Default
-    private LocalDateTime createdAt = LocalDateTime.now();
 
     public static Schedule event(String title, String description, LocalDateTime startAt, LocalDateTime endAt, User writer) {
         return Schedule.builder()
