@@ -22,7 +22,7 @@ import java.util.List;
 @EntityScan("com.calendar.core")
 @EnableJpaRepositories("com.calendar.core")
 @RestController
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.calendar")
 public class ApiApplication {
 
     private final SimpleEntityRepository repository;
