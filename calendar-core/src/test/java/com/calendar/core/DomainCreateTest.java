@@ -10,6 +10,7 @@ import com.calendar.core.domain.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DomainCreateTest {
     @Test
     void createEvent() {
-        final User me = new User("user1", "email@email", "password", LocalDateTime.now());
+        final User me = new User("user1", "email@email", "password", LocalDate.now());
         final Schedule taskSchedule = Schedule.task("할일", "청소하기", LocalDateTime.now(), me);
         assertEquals(taskSchedule.getScheduleType(), ScheduleType.TASK);
         assertEquals(taskSchedule.toTask().getTitle(), "할일");
