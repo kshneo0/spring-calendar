@@ -30,10 +30,10 @@ POST http://localhost:8080/api/schedules/events?userId=1
 Content-Type: application/json
 
 {
-  "title":"여행가자~~~",
+  "title":"테스트 여행",
   "description":"강원도로",
-  "startAt": "2021-08-10T11:00:00",
-  "endAt": "2021-08-17T11:00:00",
+  "startAt": "2021-09-10T11:00:00",
+  "endAt": "2021-09-17T11:00:00",
   "attendeeIds": [2]
 }
 
