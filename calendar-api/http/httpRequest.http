@@ -24,3 +24,15 @@ Content-Type: application/json
   "description":"test111",
   "taskAt": "2021-08-01T11:00:00"
 }
+
+###
+POST http://localhost:8080/api/schedules/events?userId=1
+Content-Type: application/json
+
+{
+  "title":"여행가자~~~",
+  "description":"강원도로",
+  "startAt": "2021-08-10T11:00:00",
+  "endAt": "2021-08-17T11:00:00",
+  "attendeeIds": [2]
+}
