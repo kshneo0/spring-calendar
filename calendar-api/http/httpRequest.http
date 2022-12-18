@@ -52,3 +52,6 @@ Content-Type: application/json
     "times": 10
   }
 }
+
+###
+GET http://localhost:8080/api/schedules/day?userId=1&date=2021-08-15

@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * fileName : Engagement
@@ -19,9 +19,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Table(name ="engagements")
+@Table(name = "engagements")
 @Entity
-public class Engagement extends BaseEntity{
+public class Engagement extends BaseEntity {
 
     @JoinColumn(name = "schedule_id")
     @ManyToOne
@@ -36,5 +36,9 @@ public class Engagement extends BaseEntity{
 
     public Event getEvent() {
         return schedule.toEvent();
+    }
+
+    public boolean isOverlapped(LocalDate date) {
+        return this.schedule.isOverlapped(date);
     }
 }
