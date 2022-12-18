@@ -36,3 +36,19 @@ Content-Type: application/json
   "endAt": "2021-08-17T11:00:00",
   "attendeeIds": [2]
 }
+
+###
+POST http://localhost:8080/api/schedules/notifications?userId=1
+Content-Type: application/json
+
+{
+  "title":"안부차 방문",
+  "notifyAt": "2021-08-15T07:00:00",
+  "repeatInfo": {
+    "interval": {
+      "intervalValue" : "1",
+      "timeUnit" : "MONTH"
+    },
+    "times": 10
+  }
+}
