@@ -55,3 +55,9 @@ Content-Type: application/json
 
 ###
 GET http://localhost:8080/api/schedules/day?userId=1&date=2021-08-15
+
+###
+GET http://localhost:8080/api/schedules/week?userId=1&startOfWeek=2021-08-12
+
+###
+GET http://localhost:8080/api/schedules/month?userId=1&yearMonth=2021-09

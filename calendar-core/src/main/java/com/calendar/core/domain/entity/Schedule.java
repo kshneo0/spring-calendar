@@ -10,7 +10,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 /**
  * fileName : Schedule
@@ -23,7 +22,7 @@ import java.time.LocalTime;
 @Getter
 @Table(name = "schedules")
 @Entity
-public class Schedule  extends BaseEntity{
+public class Schedule extends BaseEntity {
 
     private LocalDateTime startAt;
     private LocalDateTime endAt;
@@ -81,5 +80,9 @@ public class Schedule  extends BaseEntity{
 
     public boolean isOverlapped(LocalDate date) {
         return Period.of(getStartAt(), getEndAt()).isOverlapped(date);
+    }
+
+    public boolean isOverlapped(Period period) {
+        return Period.of(getStartAt(), getEndAt()).isOverlapped(period);
     }
 }
