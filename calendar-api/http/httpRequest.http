@@ -2,3 +2,25 @@ POST http://localhost:8080/save
 
 ###
 GET http://localhost:8080
+
+
+###
+POST http://localhost:8080/api/schedules/tasks
+Cookie: JSESSIONID=EF8ABB6249CCEE3E18E8CD4F28A5E122
+Content-Type: application/json
+
+{
+  "title":"",
+  "description":"화장실 가기",
+  "taskAt": "2021-08-01T11:00:00"
+}
+
+###
+POST http://localhost:8080/api/schedules/tasks?userId=1
+Content-Type: application/json
+
+{
+  "title":"test",
+  "description":"test111",
+  "taskAt": "2021-08-01T11:00:00"
+}
