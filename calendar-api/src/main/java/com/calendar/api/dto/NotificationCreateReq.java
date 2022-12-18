@@ -1,5 +1,7 @@
 package com.calendar.api.dto;
 
+import com.calendar.core.exception.CalendarException;
+import com.calendar.core.exception.ErrorCode;
 import com.calendar.core.util.TimeUnit;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,7 +40,7 @@ public class NotificationCreateReq {
                         case YEAR:
                             return notifyAt.plusYears(increment);
                         default:
-                            throw new RuntimeException("bad request. not match time unit.");
+                            throw new CalendarException(ErrorCode.BAD_REQUEST);
                     }
                 })
                 .collect(Collectors.toList());

@@ -5,6 +5,8 @@ import com.calendar.api.dto.NotificationDto;
 import com.calendar.api.dto.ScheduleDto;
 import com.calendar.api.dto.TaskDto;
 import com.calendar.core.domain.entity.Schedule;
+import com.calendar.core.exception.CalendarException;
+import com.calendar.core.exception.ErrorCode;
 
 /**
  * fileName : DtoConverter
@@ -13,8 +15,8 @@ import com.calendar.core.domain.entity.Schedule;
  */
 public abstract class DtoConverter {
 
-    public static ScheduleDto fromSchedule(Schedule schedule){
-        switch(schedule.getScheduleType()){
+    public static ScheduleDto fromSchedule(Schedule schedule) {
+        switch (schedule.getScheduleType()) {
             case EVENT:
                 return EventDto.builder()
                         .scheduleId(schedule.getId())
@@ -40,7 +42,7 @@ public abstract class DtoConverter {
                         .title(schedule.getTitle())
                         .build();
             default:
-                throw new RuntimeException("bad request. not matched scheduled type");
+                throw new CalendarException(ErrorCode.BAD_REQUEST);
         }
     }
 }
