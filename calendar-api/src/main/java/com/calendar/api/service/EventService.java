@@ -1,6 +1,7 @@
 package com.calendar.api.service;
 
 import com.calendar.api.dto.AuthUser;
+import com.calendar.api.dto.EngagementEmailStuff;
 import com.calendar.api.dto.EventCreateReq;
 import com.calendar.api.dto.TaskCreateReq;
 import com.calendar.core.domain.RequestStatus;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * fileName : TaskService
@@ -54,16 +56,27 @@ public class EventService {
                         userService.findByUserId(authUser.getId()));
         scheduleRepository.save(eventSchedule);
 
-        eventCreateReq.getAttendeeIds()
+        final List<User> attendees =
+                eventCreateReq.getAttendeeIds().stream()
+                        .map(userService::findByUserId)
+                        .collect(Collectors.toList());
+
+        attendees
                 .forEach(atId -> {
-                    final User attendee = userService.findByUserId(atId);
                     final Engagement engagement = Engagement.builder()
                             .schedule(eventSchedule)
                             .requestStatus(RequestStatus.REQUESTED)
-                            .attendee(attendee)
+                            .attendee(atId)
                             .build();
                     engagementRepository.save(engagement);
-                    emailService.sendEngagement(engagement);
+                    emailService.sendEngagement(EngagementEmailStuff.builder()
+                                    .title(engagement.getEvent().getTitle())
+                                    .toEmail(engagement.getAttendee().getEmail())
+                                    .attendeeEmails(attendees.stream()
+                                            .map(User::getEmail)
+                                            .collect(Collectors.toList()))
+                                    .period(engagement.getEvent().getPeriod())
+                            .build());
                 });
     }
 }

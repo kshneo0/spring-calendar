@@ -1,5 +1,6 @@
 package com.calendar.api.service;
 
+import com.calendar.api.dto.EngagementEmailStuff;
 import com.calendar.core.domain.entity.Engagement;
 
 /**
@@ -8,5 +9,5 @@ import com.calendar.core.domain.entity.Engagement;
  * date : 2022/12/18
  */
 public interface EmailService {
-    void sendEngagement(Engagement engagement);
+    void sendEngagement(EngagementEmailStuff engagement);
 }

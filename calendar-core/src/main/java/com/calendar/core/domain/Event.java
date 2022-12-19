@@ -1,14 +1,11 @@
 package com.calendar.core.domain;
 
-import com.calendar.core.domain.entity.Engagement;
 import com.calendar.core.domain.entity.Schedule;
-import com.calendar.core.domain.entity.User;
+import com.calendar.core.util.Period;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * fileName : Event
@@ -26,5 +23,13 @@ public class Event {
 
     public boolean isOverlapped(LocalDateTime startAt, LocalDateTime endAt) {
         return schedule.getStartAt().isBefore(endAt) && startAt.isBefore(schedule.getEndAt());
+    }
+
+    public String getTitle(){
+        return this.schedule.getTitle();
+    }
+
+    public Period getPeriod() {
+        return Period.of(this.schedule.getStartAt(), this.schedule.getEndAt());
     }
 }
