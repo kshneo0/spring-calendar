@@ -22,7 +22,7 @@ public class SignUpReq {
     @NotBlank
     private final String email;
 
-    @Size(min=6, message = "6자리 이상 입력해 주세요.")
+    @Size(min=5, message = "5자리 이상 입력해 주세요.")
     @NotBlank
     private final String password;
 

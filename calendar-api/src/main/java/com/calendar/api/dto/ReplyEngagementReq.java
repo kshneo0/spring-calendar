@@ -7,7 +7,11 @@ import com.calendar.core.domain.RequestReplyType;
  * date : 2022/12/20
  */
 public class ReplyEngagementReq {
-    private final RequestReplyType type;    //REJECT, ACCEPT
+    private RequestReplyType type;    //REJECT, ACCEPT
+
+    public ReplyEngagementReq (){
+
+    }
 
     public ReplyEngagementReq(RequestReplyType type) {
         this.type = type;

@@ -70,6 +70,7 @@ public class EventService {
                             .build();
                     engagementRepository.save(engagement);
                     emailService.sendEngagement(EngagementEmailStuff.builder()
+                                    .engagementId(engagement.getId())
                                     .title(engagement.getEvent().getTitle())
                                     .toEmail(engagement.getAttendee().getEmail())
                                     .attendeeEmails(attendees.stream()

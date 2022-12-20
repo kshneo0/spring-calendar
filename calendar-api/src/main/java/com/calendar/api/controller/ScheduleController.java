@@ -12,14 +12,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
-
-import static com.calendar.api.service.LoginService.LOGIN_SESSION_KEY;
 
 /**
  * fileName : ScheduleController
@@ -66,7 +62,7 @@ public class ScheduleController {
             AuthUser authUser,
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return scheduleQueryService.getScheduleByDay(authUser, date==null? LocalDate.now():date);
+        return scheduleQueryService.getScheduleByDay(authUser, date == null ? LocalDate.now() : date);
     }
 
     @GetMapping("/week")
@@ -74,7 +70,7 @@ public class ScheduleController {
             AuthUser authUser,
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startOfWeek) {
-        return scheduleQueryService.getScheduleByWeek(authUser, startOfWeek==null? LocalDate.now():startOfWeek);
+        return scheduleQueryService.getScheduleByWeek(authUser, startOfWeek == null ? LocalDate.now() : startOfWeek);
     }
 
     @GetMapping("/month")
@@ -82,17 +78,16 @@ public class ScheduleController {
             AuthUser authUser,
             @RequestParam(required = false)
             @DateTimeFormat(pattern = "yyyy-MM") String yearMonth) {
-        return scheduleQueryService.getScheduleByMonth(authUser, yearMonth==null? YearMonth.now(): YearMonth.parse(yearMonth));
+        return scheduleQueryService.getScheduleByMonth(authUser, yearMonth == null ? YearMonth.now() : YearMonth.parse(yearMonth));
     }
 
-    @PutMapping("/event/engagement/{engagementId}")
+    @PutMapping("/events/engagements/{engagementId}")
     public RequestStatus updateEngagement(
             @Valid @RequestBody ReplyEngagementReq replyEngagementReq,
             @PathVariable Long engagementId,
             AuthUser authUser) {
         return engagementService.update(authUser, engagementId, replyEngagementReq.getType());
     }
-
 
 
 }
