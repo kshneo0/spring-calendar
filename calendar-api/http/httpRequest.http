@@ -44,8 +44,8 @@ Content-Type: application/json
 {
   "title":"스프링 공부",
   "description":"다음시간에는 배치222",
-  "startAt": "2021-10-10T14:00:00",
-  "endAt": "2021-10-14T15:00:00",
+  "startAt": "2021-10-09T14:00:00",
+  "endAt": "2021-10-09T15:00:00",
   "attendeeIds": [2]
 }
 
