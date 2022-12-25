@@ -1,10 +1,7 @@
 package com.calendar.api.controller;
 
 import com.calendar.api.dto.*;
-import com.calendar.api.service.EventService;
-import com.calendar.api.service.NotificationService;
-import com.calendar.api.service.ScheduleQueryService;
-import com.calendar.api.service.TaskService;
+import com.calendar.api.service.*;
 import com.calendar.api.util.EngagementService;
 import com.calendar.core.domain.RequestStatus;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +29,7 @@ public class ScheduleController {
     private final EventService eventService;
     private final NotificationService notificationService;
     private final EngagementService engagementService;
+    private final ShareService shareService;
 
     @PostMapping("/tasks")
     public ResponseEntity<Void> createTask(
@@ -89,5 +87,23 @@ public class ScheduleController {
         return engagementService.update(authUser, engagementId, replyEngagementReq.getType());
     }
 
+    @PostMapping("/shares")
+    public void shareSchedule(
+            AuthUser authUser,
+            @Valid @RequestBody CreateShareReq req
+    ) {
+        shareService.createShare(authUser.getId(),
+                req.getToUserId(),
+                req.getDirection());
+    }
+
+    @PutMapping("/shares/{shareId}")
+    public void replyToShareRequest(
+            @PathVariable Long shareId,
+            @Valid @RequestBody ReplyReq replyReq,
+            AuthUser authUser
+    ) {
+        shareService.replyToShareRequest(shareId, authUser.getId(), replyReq.getType());
+    }
 
 }

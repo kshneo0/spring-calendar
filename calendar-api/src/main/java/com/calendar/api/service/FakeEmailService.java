@@ -2,7 +2,7 @@ package com.calendar.api.service;
 
 import com.calendar.api.controller.BatchController;
 import com.calendar.api.dto.EngagementEmailStuff;
-import com.calendar.core.domain.entity.Engagement;
+import com.calendar.core.domain.entity.Share;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +21,11 @@ public class FakeEmailService implements EmailService {
 
     @Override
     public void sendAlarmMail(BatchController.SendMailBatchReq req) {
-        System.out.println("send alarm. "+ req.toString());
+        System.out.println("send alarm. " + req.toString());
+    }
+
+    @Override
+    public void sendShareRequestMail(String email, String email1, Share.Direction direction) {
+        System.out.println("send share mail");
     }
 }

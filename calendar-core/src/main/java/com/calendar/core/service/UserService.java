@@ -45,7 +45,7 @@ public class UserService {
     }
 
     @Transactional
-    public User findByUserId(Long userId){
+    public User getOrThrowById(Long userId){
         return userRepository.findById(userId)
                 .orElseThrow(()-> new CalendarException(ErrorCode.USER_NOT_FOUND));
     }

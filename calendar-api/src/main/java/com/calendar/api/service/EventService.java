@@ -3,7 +3,6 @@ package com.calendar.api.service;
 import com.calendar.api.dto.AuthUser;
 import com.calendar.api.dto.EngagementEmailStuff;
 import com.calendar.api.dto.EventCreateReq;
-import com.calendar.api.dto.TaskCreateReq;
 import com.calendar.core.domain.RequestStatus;
 import com.calendar.core.domain.entity.Engagement;
 import com.calendar.core.domain.entity.Schedule;
@@ -53,12 +52,12 @@ public class EventService {
                         eventCreateReq.getDescription(),
                         eventCreateReq.getStartAt(),
                         eventCreateReq.getEndAt(),
-                        userService.findByUserId(authUser.getId()));
+                        userService.getOrThrowById(authUser.getId()));
         scheduleRepository.save(eventSchedule);
 
         final List<User> attendees =
                 eventCreateReq.getAttendeeIds().stream()
-                        .map(userService::findByUserId)
+                        .map(userService::getOrThrowById)
                         .collect(Collectors.toList());
 
         attendees

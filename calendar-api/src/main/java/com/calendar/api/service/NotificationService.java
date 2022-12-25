@@ -1,13 +1,9 @@
 package com.calendar.api.service;
 
 import com.calendar.api.dto.AuthUser;
-import com.calendar.api.dto.EventCreateReq;
 import com.calendar.api.dto.NotificationCreateReq;
-import com.calendar.core.domain.RequestStatus;
-import com.calendar.core.domain.entity.Engagement;
 import com.calendar.core.domain.entity.Schedule;
 import com.calendar.core.domain.entity.User;
-import com.calendar.core.domain.entity.repository.EngagementRepository;
 import com.calendar.core.domain.entity.repository.ScheduleRepository;
 import com.calendar.core.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +27,7 @@ public class NotificationService {
 
     @Transactional
     public void create(NotificationCreateReq notificationCreateReq, AuthUser authUser) {
-        final User user = userService.findByUserId(authUser.getId());
+        final User user = userService.getOrThrowById(authUser.getId());
         final List<LocalDateTime> notifyAtList = notificationCreateReq.getRepeatTimes();
         notifyAtList.forEach( notify -> {
             final Schedule notificationSchedule =
