@@ -1,9 +1,9 @@
 package com.calendar.api.util;
 
-import com.calendar.api.dto.EventDto;
-import com.calendar.api.dto.NotificationDto;
-import com.calendar.api.dto.ScheduleDto;
-import com.calendar.api.dto.TaskDto;
+import com.calendar.api.dto.ForListEventDto;
+import com.calendar.api.dto.ForListNotificationDto;
+import com.calendar.api.dto.ForListScheduleDto;
+import com.calendar.api.dto.ForListTaskDto;
 import com.calendar.core.domain.entity.Schedule;
 import com.calendar.core.exception.CalendarException;
 import com.calendar.core.exception.ErrorCode;
@@ -15,10 +15,10 @@ import com.calendar.core.exception.ErrorCode;
  */
 public abstract class DtoConverter {
 
-    public static ScheduleDto fromSchedule(Schedule schedule) {
+    public static ForListScheduleDto toForListDto(Schedule schedule) {
         switch (schedule.getScheduleType()) {
             case EVENT:
-                return EventDto.builder()
+                return ForListEventDto.builder()
                         .scheduleId(schedule.getId())
                         .description(schedule.getDescription())
                         .startAt(schedule.getStartAt())
@@ -27,7 +27,7 @@ public abstract class DtoConverter {
                         .writerId(schedule.getWriter().getId())
                         .build();
             case TASK:
-                return TaskDto.builder()
+                return ForListTaskDto.builder()
                         .scheduleId(schedule.getId())
                         .taskAt(schedule.getStartAt())
                         .description(schedule.getDescription())
@@ -35,7 +35,7 @@ public abstract class DtoConverter {
                         .title(schedule.getTitle())
                         .build();
             case NOTIFICATION:
-                return NotificationDto.builder()
+                return ForListNotificationDto.builder()
                         .scheduleId(schedule.getId())
                         .notifyAt(schedule.getStartAt())
                         .writerId(schedule.getWriter().getId())

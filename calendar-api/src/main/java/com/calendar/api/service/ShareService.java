@@ -4,6 +4,8 @@ package com.calendar.api.service;
  * author :  sanghoonkim
  * date : 2022/12/25
  */
+
+import com.calendar.api.dto.AuthUser;
 import com.calendar.core.domain.RequestReplyType;
 import com.calendar.core.domain.RequestStatus;
 import com.calendar.core.domain.entity.Share;
@@ -16,7 +18,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -45,5 +49,35 @@ public class ShareService {
                 .filter(s -> s.getRequestStatus() == RequestStatus.REQUESTED)
                 .map(share -> share.reply(type))
                 .orElseThrow(() -> new CalendarException(ErrorCode.BAD_REQUEST));
+    }
+
+    /**
+     * 공유 대상 조회
+     * <p>
+     * 자신과 양방향 공유인 상대방 (자신이 to, from 둘다 가능)
+     * 내가 공유 수신자(toUser)인 경우 (단방향)
+     *
+     * @param authUser
+     * @return
+     */
+
+    @Transactional
+    public List<Long> findSharedUserIdsByUser(AuthUser authUser) {
+        return Stream.concat(
+                        shareRepository.findAllByBiDirection(
+                                        authUser.getId(),
+                                        RequestStatus.ACCEPTED,
+                                        Share.Direction.BI_DIRECTION
+                                )
+                                .stream()
+                                .map(s -> s.getToUserId().equals(authUser.getId()) ? s.getFromUserId() : s.getToUserId()),
+                        shareRepository.findAllByToUserIdAndRequestStatusAndDirection(authUser.getId(),
+                                        RequestStatus.ACCEPTED,
+                                        Share.Direction.UNI_DIRECTION
+                                )
+                                .stream()
+                                .map(Share::getFromUserId)
+                )
+                .collect(Collectors.toList());
     }
 }
