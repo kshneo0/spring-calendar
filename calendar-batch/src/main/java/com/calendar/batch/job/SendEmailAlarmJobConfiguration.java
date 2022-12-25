@@ -16,7 +16,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
-import java.util.stream.Collectors;
 
 /**
  * author :  sanghoonkim
@@ -75,7 +74,7 @@ public class SendEmailAlarmJobConfiguration {
         return new JdbcCursorItemReaderBuilder<SendMailBatchReq>()
                 .dataSource(dataSource)
                 .rowMapper(new BeanPropertyRowMapper<>(SendMailBatchReq.class))
-                .sql("select s.id, s.start_at, s.title, u.email as user_email\n" +
+                .sql("select s.id, s.start_at, s.title, u.email as user_mail\n" +
                         "from schedules s\n" +
                         "         left join users u on u.id = s.writer_id\n" +
                         "where s.start_at >= now() + interval 10 minute\n" +
@@ -89,7 +88,7 @@ public class SendEmailAlarmJobConfiguration {
         return new JdbcCursorItemReaderBuilder<SendMailBatchReq>()
                 .dataSource(dataSource)
                 .rowMapper(new BeanPropertyRowMapper<>(SendMailBatchReq.class))
-                .sql("select s.id, s.start_at, s.title, u.email as user_email\n" +
+                .sql("select s.id, s.start_at, s.title, u.email as user_mail\n" +
                         "from schedules s\n" +
                         "         left join engagements e on s.id = e.schedule_id\n" +
                         "         left join users u on u.id = e.attendee_id\n" +
@@ -103,7 +102,8 @@ public class SendEmailAlarmJobConfiguration {
     @Bean
     public ItemWriter<SendMailBatchReq> sendEmailAlarmWriter() {
         return list -> new RestTemplate().postForObject(
-                "http://localhost:8080/api/barch/mail", list, Object.class
+                "http://localhost:8080/api/batch/mail", list, Object.class
         );
     }
+
 }

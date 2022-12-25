@@ -1,5 +1,6 @@
 package com.calendar.api.service;
 
+import com.calendar.api.controller.BatchController;
 import com.calendar.api.dto.EngagementEmailStuff;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -34,5 +35,10 @@ public class RealEmailService implements EmailService {
                             new Context(Locale.KOREAN, stuff.getProps())), true);
         };
         emailSender.send(preparator);
+    }
+
+    @Override
+    public void sendAlarmMail(BatchController.SendMailBatchReq req) {
+        System.out.println("send alarm. " + req.toString());
     }
 }
